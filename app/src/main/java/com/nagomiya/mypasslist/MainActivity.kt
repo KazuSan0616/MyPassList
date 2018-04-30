@@ -5,8 +5,11 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
 
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.startActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,8 +19,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+            startActivity<RegistPassActivity>()
         }
     }
 
@@ -36,4 +38,5 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
 }
