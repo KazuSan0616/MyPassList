@@ -17,6 +17,14 @@
         android:inputType="textPersonName" />
 
     <EditText
+        android:id="@+id/userIdEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="UserID"
+        android:inputType="textPersonName" />
+
+    <EditText
         android:id="@+id/passEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,4 +38,5 @@
         android:layout_height="wrap_content"
         android:onClick="addPass"
         android:text="Add" />
+
 </LinearLayout>

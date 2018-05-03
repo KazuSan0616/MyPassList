@@ -1,15 +1,20 @@
 package com.nagomiya.mypasslist
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Toast
+import android.widget.ArrayAdapter
+import android.widget.ListAdapter
+import com.nagomiya.mypasslist.db.PassOpenHelper
+import com.nagomiya.mypasslist.db.PasswordRowParser
 
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
+import org.jetbrains.anko.db.SqlOrderDirection
+import org.jetbrains.anko.db.select
 import org.jetbrains.anko.startActivity
+import java.sql.Struct
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +25,26 @@ class MainActivity : AppCompatActivity() {
 
         fab.setOnClickListener { view ->
             startActivity<RegistPassActivity>()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val helper = PassOpenHelper(applicationContext)
+
+        helper.use {
+            val list = select(PassOpenHelper.TABLE_NAME)
+                    .orderBy("_id", SqlOrderDirection.DESC)
+                    .parseList(PasswordRowParser())
+
+            // ListViewのAdapterに情報をセット
+            passList.adapter = ArrayAdapter<String>(
+                    this@MainActivity,
+                    R.layout.pass_row,
+                    list.map { "${it.title}:\n${it.uid} / ${it.password}" }
+            )
+
         }
     }
 
